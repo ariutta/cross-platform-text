@@ -2,11 +2,8 @@ var tmp = require('temporary');
 
 var jsSources = [
   'cross-platform-text.js',
-  'svg/svg.js',
-  'svg/image.js',
-  'svg/marker.js',
-  'svg/path.js',
-  'canvas/canvas.js'
+  'svg.js',
+  'canvas.js'
 ];
 
 var specFileName;
@@ -40,7 +37,7 @@ grunt.initConfig({
           process: true
         },
         crossPlatformText: {
-            src:  [ '<banner>', 'markers.js' ].concat(jsSources),
+            src:  [ '<banner>' ].concat(jsSources),
             dest: tmpDir + 'cross-platform-text/js/cross-platform-text.js'
         }
     },

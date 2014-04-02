@@ -14,7 +14,37 @@ crossPlatformText.svg = {
     'inherit': 'inherit',
     'justify': null
     //*/
-  prepareForRendering: function(data, callback) {
+  init: function(data, callback) {
+    var viewport;
+    if (!this.targetImageSelection) {
+      var id = args.id || 'cross-platform-text-svg';
+      targetImageSelection = this.targetSelection.append('svg')
+      .attr('id', id)
+      .attr('version', '1.1')
+      .attr('baseProfile', 'full')
+      .attr('xmlns', 'http://www.w3.org/1999/xlink')
+      .attr('xmlns:xmlns:xlink', 'http://www.w3.org/1999/xlink')
+      .attr('xmlns:xmlns:ev', 'http://www.w3.org/2001/xml-events')
+      .attr('preserveAspectRatio', 'xMidYMid')
+      .attr('width', width)
+      .attr('height', height);
+
+      viewport = targetImageSelection.append('g')
+      .attr('id', 'viewport');
+    }
+    else {
+      targetImageSelection = this.targetImageSelection;
+      viewport = targetImageSelection.select('#viewport');
+      if (!viewport[0][0]) {
+        viewport = targetImageSelection.select('g');
+      }
+    }
+
+    if (!!callback) {
+      callback(viewport);
+    }
+  },
+  render: function(data, callback) {
     var svgTextDataGenerator = this;
     var crossPlatformTextInstance = this.crossPlatformTextInstance;
     var attributeDependencyOrder = [
@@ -28,34 +58,41 @@ crossPlatformText.svg = {
       quadraticCurveTo: 'Q'
     };
 
+    var translateX = data.x + data.width / 2;
+    var translateY = data.y + data.height / 2;
+    var textAreaSelection = d3.select('#my-svg1').select('#viewport').append('g')
+    .attr('transform', function(d) {
+      return 'translate(' + translateX + ' ' + translateY + ')';
+    });
 
-    var viewport;
-    if (this.targetTagName !== 'svg') {
-      var id = args.id || 'cross-platform-shape-svg';
-      targetImageSelection = this.targetSelection.append('svg')
-      .attr('id', id)
-      .attr('version', '1.1')
-      .attr('baseProfile', 'full')
-      .attr('xmlns', 'http://www.w3.org/1999/xlink')
-      .attr('xmlns:xmlns:xlink', 'http://www.w3.org/1999/xlink')
-      .attr('xmlns:xmlns:ev', 'http://www.w3.org/2001/xml-events')
-      .attr('preserveAspectRatio', 'xMidYMid')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('style', 'background-color:' + backgroundColor + '; ');
-
-      viewport = targetImageSelection.append('g')
-      .attr('id', 'viewport');
+    var textAnchor, textLinesX;
+    if (data.textAlign === 'left'){
+      textAnchor = 'start';
+      textLinesX = -1 * data.width / 2;
+    }
+    else if (data.textAlign === 'right') {
+      textAnchor = 'end';
+      textLinesX = data.width / 2;
     }
     else {
-      targetImageSelection = this.targetImageSelection;
-      this.marker.targetImageSelectionDefs = this.targetImageSelection.select('defs');
-      viewport = targetImageSelection.select('#viewport');
-      if (!viewport[0][0]) {
-        viewport = targetImageSelection.select('g');
-      }
+      textAnchor = 'middle';
+      textLinesX = 0;
     }
+    var textContentSplitIntoLines = data.textContent.split(/\r\n|\r|\n|&#xA;/g);
+    var textLineCount = textContentSplitIntoLines.length;
 
+    var textLinesSelection = textAreaSelection.selectAll('text')
+    .data(textContentSplitIntoLines)
+    .enter()
+    .append('text')
+    .attr("id", function (d, i) {
+      return 'text-line' + i;
+    })
+    .attr("x", textLinesX)
+    .attr("y", function (d, i) { return (i - (textLineCount - 1)/2) * 1.1 + 'em';})
+    .attr("alignment-baseline", data.verticalAlign) 
+    .attr("text-anchor", textAnchor)
+    .text(function (d) { return d; });
 
     var result = {};
     var attributes = [];
@@ -69,28 +106,31 @@ crossPlatformText.svg = {
     //*
     var svgTextAttributeGenerator = {
       id: function(idValue){
-        attributes.push({name: 'id', value: 'text-for-' + idValue});
+        textAreaSelection.attr('id', 'text-for-' + idValue);
+        //attributes.push({name: 'id', value: 'text-for-' + idValue});
       },
       fontSize: function(fontSizeValue){
-        attributes.push({name: 'font-size', value: fontSizeValue});
+        textAreaSelection.attr('font-size', fontSizeValue);
+        //attributes.push({name: 'font-size', value: fontSizeValue});
       },
       fill: function(fillValue){
+        textAreaSelection.attr('fill', fillValue);
         attributes.push({name: 'fill', value: fillValue});
       },
       fillOpacity: function(fillOpacityValue){
-        attributes.push({name: 'fill-opacity', value: fillOpacityValue});
+        textAreaSelection.attr('id', 'text-for-' + idValue);
+        //attributes.push({name: 'fill-opacity', value: fillOpacityValue});
       },
       color: function(colorValue){
         color = colorValue;
-        attributes.push({name: 'color', value: colorValue});
-        attributes.push({name: 'stroke', value: colorValue});
+        textAreaSelection.attr('fill', colorValue);
+        //attributes.push({name: 'color', value: colorValue});
+        //attributes.push({name: 'stroke', value: colorValue});
       },
       rotation: function(rotationValue) {
         var transform = 'rotate(' + rotationValue + ',' + (data.x + data.width/2) + ',' + (data.y + data.height/2) + ')';
-        attributes.push({name: 'transform', value: transform});
-      },
-      strokeWidth: function(strokeWidthValue) {
-        attributes.push({name: 'stroke-width', value: strokeWidthValue});
+        textAreaSelection.attr('transform', transform);
+        //attributes.push({name: 'transform', value: transform});
       }
     };
 
@@ -106,11 +146,11 @@ crossPlatformText.svg = {
       }
     });
 
-    result.attributes = attributes;
+    //result.attributes = attributes;
     if (!!callback) {
-      callback(targetSelection);
+      callback(textAreaSelection);
     }
-  },
+  }
 
 
 
@@ -123,7 +163,7 @@ crossPlatformText.svg = {
 
 
 
-
+/*
   render: function(args, callback) {
     var crossPlatformTextInstance = this.crossPlatformTextInstance;
     // TODO make a better caching system
@@ -213,14 +253,13 @@ crossPlatformText.svg = {
     .attr("text-anchor", text.cache.textAnchor)
     .text(function (d) { return d; });
 
-    /*
-    nodeText.attr('transform', function(d) {
-      applyTextAlign(nodeText[0][0], d, function(translate) {
-        return 'translate(' + translate.dx + ' ' + translate.dy + ')';
-      });
-    })
-    //*/
+    //nodeText.attr('transform', function(d) {
+    //  applyTextAlign(nodeText[0][0], d, function(translate) {
+   //     return 'translate(' + translate.dx + ' ' + translate.dy + ')';
+    //  });
+    //})
 
   }
+  //*/
 };
 
