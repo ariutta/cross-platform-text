@@ -1,44 +1,7 @@
 var tmp = require('temporary');
 
 var jsSources = [
-  'cross-platform-shapes.js',
-  'path-calculator/path-calculator.js',
-  'path-calculator/arc.js',
-  'path-calculator/arrow.js',
-  'path-calculator/brace.js',
-  'path-calculator/complex.js',
-  'path-calculator/endoplasmic-reticulum.js',
-  'path-calculator/golgi-apparatus.js',
-  'path-calculator/hexagon.js',
-  'path-calculator/line-curved.js',
-  'path-calculator/line-elbow.js',
-  'path-calculator/line-segmented.js',
-  'path-calculator/line-straight.js',
-  'path-calculator/mim-megradation.js',
-  'path-calculator/mitochondria.js',
-  'path-calculator/oval-double.js',
-  'path-calculator/oval.js',
-  'path-calculator/pentagon.js',
-  'path-calculator/rectangle.js',
-  'path-calculator/rounded-rectangle-double.js',
-  'path-calculator/rounded-rectangle.js',
-  'path-calculator/sarcoplasmic-reticulum.js',
-  'path-calculator/triangle.js',
-  'path-calculator/mim-secessary-stimulation.js',
-  'path-calculator/mim-binding.js',
-  'path-calculator/mim-conversion.js',
-  'path-calculator/mim-stimulation.js',
-  'path-calculator/mim-modification.js',
-  'path-calculator/mim-catalysis.js',
-  'path-calculator/mim-inhibition.js',
-  'path-calculator/mim-cleavage.js',
-  'path-calculator/mim-covalentBond.js',
-  'path-calculator/mim-transcription-translation.js',
-  'path-calculator/mim-gap.js',
-  'path-calculator/t-bar.js',
-  'path-calculator/mim-branching-left.js',
-  'path-calculator/mim-branching-right.js',
-  'custom-shapes.js',
+  'cross-platform-text.js',
   'svg/svg.js',
   'svg/image.js',
   'svg/marker.js',
@@ -72,13 +35,13 @@ grunt.initConfig({
           banner: "/* <%= pkg.name %> <%= pkg.version %>\n" +
               "Built on <%= grunt.template.today('yyyy-mm-dd') %>\n" +
               //"//! Git commit: <%= gitInfo %>\n" +
-              "https://github.com/ariutta/cross-platform-shapes\n" +
+              "https://github.com/ariutta/cross-platform-text\n" +
               "License: http://www.apache.org/licenses/LICENSE-2.0/ */\n\n",
           process: true
         },
         crossPlatformText: {
             src:  [ '<banner>', 'markers.js' ].concat(jsSources),
-            dest: tmpDir + 'cross-platform-shapes/js/cross-platform-shapes.js'
+            dest: tmpDir + 'cross-platform-text/js/cross-platform-text.js'
         }
     },
     uglify: {
@@ -86,8 +49,8 @@ grunt.initConfig({
         mangle: false
       },
       crossPlatformText: {
-        src: [ tmpDir + 'cross-platform-shapes/js/cross-platform-shapes.js' ],
-        dest: distLibDir + 'cross-platform-shapes/js/cross-platform-shapes.min.js'
+        src: [ tmpDir + 'cross-platform-text/js/cross-platform-text.js' ],
+        dest: distLibDir + 'cross-platform-text/js/cross-platform-text.min.js'
       }
     },
     watch: {
@@ -111,7 +74,7 @@ grunt.initConfig({
         jshintrc: '.jshintrc'
       },
       beforeconcat: jsSources,
-      afterconcat: [ distLibDir + 'cross-platform-shapes/js/cross-platform-shapes.min.js' ]
+      afterconcat: [ distLibDir + 'cross-platform-text/js/cross-platform-text.min.js' ]
     },
     str2js: {
       'crossPlatformTextNS': { 'markers.js': ['markers.svg']}
@@ -171,7 +134,7 @@ grunt.initConfig({
       },
       pages: {
         options: {
-          remote: 'git@github.com:ariutta/cross-platform-shapes.git',
+          remote: 'git@github.com:ariutta/cross-platform-text.git',
           branch: 'gh-pages'
         }
       },
