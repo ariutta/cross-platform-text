@@ -60,10 +60,9 @@ crossPlatformText.svg = {
 
     var translateX = data.x + data.width / 2;
     var translateY = data.y + data.height / 2;
-    var textAreaSelection = d3.select('#my-svg1').select('#viewport').append('g')
-    .attr('transform', function(d) {
-      return 'translate(' + translateX + ' ' + translateY + ')';
-    });
+    var transform = 'translate(' + translateX + ' ' + translateY + ')';
+    var textAreaSelection = targetImageSelection.select(data.containerSelector).append('g')
+    .attr('transform', transform);
 
     var textAnchor, textLinesX;
     if (data.textAlign === 'left'){
@@ -128,7 +127,10 @@ crossPlatformText.svg = {
         //attributes.push({name: 'stroke', value: colorValue});
       },
       rotation: function(rotationValue) {
-        var transform = 'rotate(' + rotationValue + ',' + (data.x + data.width/2) + ',' + (data.y + data.height/2) + ')';
+        transform += ' rotate(' + rotationValue + ')';
+        //transform += ' rotate(' + rotationValue + ',' + (-1 * data.width/2) + ',' + (-1 * data.height/2) + ')';
+        //transform += ' rotate(' + rotationValue + ',' + (data.x) + ',' + (data.y) + ')';
+        //transform += ' rotate(' + rotationValue + ',' + (data.x + data.width/2) + ',' + (data.y + data.height/2) + ')';
         textAreaSelection.attr('transform', transform);
         //attributes.push({name: 'transform', value: transform});
       }
