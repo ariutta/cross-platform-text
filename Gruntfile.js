@@ -23,7 +23,6 @@ grunt.initConfig({
     pkg: packageJson,
     clean: {
       build: [distDir],
-      tmp: ['markers.js'],
       demoLibs: ['./demos/lib/']
     },
     concat: {
@@ -72,9 +71,6 @@ grunt.initConfig({
       },
       beforeconcat: jsSources,
       afterconcat: [ distLibDir + 'cross-platform-text/js/cross-platform-text.min.js' ]
-    },
-    str2js: {
-      'crossPlatformTextNS': { 'markers.js': ['markers.svg']}
     },
     "git-describe": {
       build: {
@@ -157,7 +153,6 @@ grunt.initConfig({
   });
 
   // Load the plugin that provides the tasks.
-  grunt.loadNpmTasks("grunt-string-to-js");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -201,11 +196,11 @@ grunt.initConfig({
   });
 
   // build 
-  grunt.registerTask('build', ['sync', 'str2js', 'clean:build', 'git-describe', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'clean:demoLibs', 'copy', 'clean:tmp']);
-  //grunt.registerTask('build', ['sync', 'str2js', 'clean:build', 'git-describe', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'copy', 'clean:tmp']);
+  grunt.registerTask('build', ['sync', 'clean:build', 'git-describe', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'clean:demoLibs', 'copy']);
+  //grunt.registerTask('build', ['sync', 'clean:build', 'git-describe', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'copy']);
 
   // quick-build 
-  grunt.registerTask('quick-build', ['sync', 'str2js', 'clean:build', 'git-describe', 'concat', 'uglify', 'clean:demoLibs', 'copy', 'clean:tmp']);
+  grunt.registerTask('quick-build', ['sync', 'clean:build', 'git-describe', 'concat', 'uglify', 'clean:demoLibs', 'copy']);
 
   // test
   grunt.registerTask('test-min', 'Run local tests for development', function(val) {

@@ -117,7 +117,7 @@ crossPlatformText.svg = {
         attributes.push({name: 'fill', value: fillValue});
       },
       fillOpacity: function(fillOpacityValue){
-        textAreaSelection.attr('id', 'text-for-' + idValue);
+        textAreaSelection.attr('fill-opacity', fillOpacityValue);
         //attributes.push({name: 'fill-opacity', value: fillOpacityValue});
       },
       color: function(colorValue){
