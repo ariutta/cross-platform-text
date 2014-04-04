@@ -104,7 +104,7 @@ crossPlatformText.svg = {
       return 'text-line' + i;
     })
     .attr("x", 0)
-    .attr("y", function (d, i) { return (i - (textLineCount - 1)/2) * 1.1 + 'em';})
+    .attr("y", function (d, i) { return (-1 * (i - (textLineCount - 1)/2) * 1.1) + 'em';})
     .attr("dominant-baseline", 'central') 
     //.attr("alignment-baseline", data.verticalAlign) 
     .attr("text-anchor", textAnchor)
@@ -145,8 +145,6 @@ crossPlatformText.svg = {
         textAreaSelection.attr('font-weight', fontWeightValue);
       },
       rotation: function(rotationValue) {
-        //transform += ' rotate(' + rotationValue + ')';
-
         transform += ' rotate(' + rotationValue + ',' + (width/2 - textAlignXTranslation) + ',' + (height/2 - verticalAlignYTranslation) + ')';
         textAreaSelection.attr('transform', transform);
       }
