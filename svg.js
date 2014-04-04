@@ -52,11 +52,6 @@ crossPlatformText.svg = {
     ];
 
     var textContentSplitIntoLines = data.textContent.split(/\r\n|\r|\n|&#xA;/g);
-    var longestTextLine = textContentSplitIntoLines.sort(function(a, b) {
-      return a.length - b.length;
-    })[0].length;
-    console.log('longestTextLine');
-    console.log(longestTextLine);
     var textLineCount = textContentSplitIntoLines.length;
 
     var padding = data.padding || 0,
@@ -79,7 +74,6 @@ crossPlatformText.svg = {
     }
     var xTranslation = data.x + textAlignXTranslation;
 
-    var textAreaWidth = ((longestTextLine - 1) * 1.1 * fontSize);
     var textAreaHeight = ((textLineCount - 1) * 1.1 * fontSize);
     var verticalAlignYTranslation;
     if (data.verticalAlign === 'top'){
@@ -104,7 +98,9 @@ crossPlatformText.svg = {
       return 'text-line' + i;
     })
     .attr("x", 0)
-    .attr("y", function (d, i) { return (-1 * (i - (textLineCount - 1)/2) * 1.1) + 'em';})
+    .attr("y", function (d, i) {
+      return (i - (textLineCount - 1)/2) * 1.1 + 'em';
+    })
     .attr("dominant-baseline", 'central') 
     //.attr("alignment-baseline", data.verticalAlign) 
     .attr("text-anchor", textAnchor)
