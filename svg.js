@@ -160,7 +160,7 @@ crossPlatformText.svg = {
 
     //result.attributes = attributes;
     if (!!callback) {
-      callback(textAreaSelection);
+      callback(textAreaSelection[0][0]);
     }
   }
 };
