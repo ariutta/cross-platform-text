@@ -1,4 +1,4 @@
-window.crossPlatformText = {
+var crossPlatformText = {
   init: function(args, callback){
     var crossPlatformTextInstance = this;
     this.svg.crossPlatformTextInstance = this;
