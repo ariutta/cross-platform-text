@@ -36,10 +36,13 @@ var crossPlatformText = {
       });
     }
   },
+  isNumber: function(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  },
   convertToPx: function(inputString, fontSize) {
     // if current fontSize is 12pt, then 1em = 12pt = 16px = 100%
     var inputStringLowerCased, px;
-    if (pathvisiojs.utilities.isNumber(inputString)) {
+    if (this.isNumber(inputString)) {
       px = inputString;
     }
     else {
