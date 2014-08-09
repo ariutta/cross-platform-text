@@ -1,4 +1,9 @@
 crossPlatformText.svg = {
+  xmlNS: 'http://www.w3.org/XML/1998/namespace',
+  svgNS: 'http://www.w3.org/2000/svg',
+  xmlnsNS: 'http://www.w3.org/2000/xmlns/',
+  xlinkNS: 'http://www.w3.org/1999/xlink',
+  evNS: 'http://www.w3.org/2001/xml-events',
 
   // for more details, see 
   // http://www.w3.org/TR/SVG11/text.html#TextAnchorProperty
@@ -14,35 +19,43 @@ crossPlatformText.svg = {
     'inherit': 'inherit',
     'justify': null
     //*/
-  init: function(data, callback) {
-    var viewport;
-    if (!this.targetImageSelection) {
-      var id = args.id || 'cross-platform-text-svg';
-      targetImageSelection = this.targetSelection.append('svg')
-      .attr('id', id)
-      .attr('version', '1.1')
-      .attr('baseProfile', 'full')
-      .attr('xmlns', 'http://www.w3.org/1999/xlink')
-      .attr('xmlns:xmlns:xlink', 'http://www.w3.org/1999/xlink')
-      .attr('xmlns:xmlns:ev', 'http://www.w3.org/2001/xml-events')
-      .attr('preserveAspectRatio', 'xMidYMid')
-      .attr('width', width)
-      .attr('height', height);
+  getTargetImageSelection: function(crossPlatformTextInstance, targetElement) {
+    var svgId = 'svg-' + new Date().toISOString().replace(/\D/g, '');
+    var targetSvg = document.createElementNS(this.svgNS, 'svg');
+    targetSvg.setAttributeNS(this.xmlnsNS, 'xmlns', this.svgNS);
+    targetSvg.setAttributeNS(this.xmlnsNS, 'xmlns:xlink', this.xlinkNS);
+    targetSvg.setAttributeNS(this.xmlnsNS, 'xmlns:ev', this.evNS);
+    targetSvg.setAttribute('id', svgId);
+    targetSvg.setAttribute('version', '1.1');
+    targetSvg.setAttribute('baseProfile', 'full');
+    targetSvg.setAttribute('preserveAspectRatio', 'xMidYMid');
+    targetSvg.setAttribute('width', '100%');
+    targetSvg.setAttribute('height', '100%');
+    targetElement.appendChild(targetSvg);
+    var targetImageSelection = d3.select(targetSvg);
+    return targetImageSelection;
+  },
+  getOrCreateViewport: function(crossPlatformTextInstance, targetSvg) {
+    var viewport = targetSvg.querySelector('g.viewport');
 
-      viewport = targetImageSelection.append('g')
-      .attr('id', 'viewport');
-    }
-    else {
-      targetImageSelection = this.targetImageSelection;
-      viewport = targetImageSelection.select('#viewport');
-      if (!viewport[0][0]) {
-        viewport = targetImageSelection.select('g');
+    // If no g element with class 'viewport' exists, create one
+    if (!viewport) {
+      var viewportId = 'viewport-' + new Date().toISOString().replace(/\D/g, '');
+      viewport = document.createElementNS(this.svgNS, 'g');
+      viewport.setAttribute('id', viewportId);
+      viewport.setAttribute('class', 'viewport');
+
+      // Internet Explorer (all versions?) can't use childNodes, but other browsers prefer (require?) using childNodes
+      var targetSvgChildren = targetSvg.childNodes || targetSvg.children;
+      if (!!targetSvgChildren && targetSvgChildren.length > 0) {
+        do {
+          viewport.appendChild(targetSvgChildren[0]);
+        } while (targetSvgChildren.length > 0);
       }
+      targetSvg.appendChild(viewport);
     }
 
-    if (!!callback) {
-      callback(viewport);
-    }
+    return viewport;
   },
   render: function(data, callback) {
     var svgTextDataGenerator = this;
@@ -87,8 +100,13 @@ crossPlatformText.svg = {
     var yTranslation = data.y + verticalAlignYTranslation;
 
     var transform = 'translate(' + xTranslation + ' ' + yTranslation + ')';
-    var textAreaSelection = targetImageSelection.select(data.containerSelector).append('g')
-    .attr('transform', transform);
+    var textAreaSelection;
+    if (!!data.containerSelector) {
+      textAreaSelection = this.targetImageSelection.select(data.containerSelector).append('g')
+    } else {
+      textAreaSelection = this.targetImageSelection.append('g')
+    }
+    textAreaSelection.attr('transform', transform);
 
     var textLinesSelection = textAreaSelection.selectAll('text')
     .data(textContentSplitIntoLines)
