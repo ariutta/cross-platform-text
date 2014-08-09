@@ -26,10 +26,13 @@ var crossPlatformText = {
     crossPlatformTextInstance.render = crossPlatformTextInstance[format].render;
     return crossPlatformTextInstance;
   },
+  isNumber: function(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  },
   convertToPx: function(inputString, fontSize) {
     // if current fontSize is 12pt, then 1em = 12pt = 16px = 100%
     var inputStringLowerCased, px;
-    if (_.isNumber(inputString)) {
+    if (this.isNumber(inputString)) {
       px = inputString;
     }
     else {

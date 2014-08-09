@@ -1,6 +1,6 @@
 {
   "name": "cross-platform-text",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Render text with Canvas, SVG and possibly other formats in the future.",
   "main": "Gruntfile.js",
   "directories": {},

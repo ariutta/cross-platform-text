@@ -5,7 +5,7 @@ crossPlatformText.svg = {
   xlinkNS: 'http://www.w3.org/1999/xlink',
   evNS: 'http://www.w3.org/2001/xml-events',
 
-  // for more details, see 
+  // for more details, see
   // http://www.w3.org/TR/SVG11/text.html#TextAnchorProperty
   // start | middle | end | inherit
   // and
@@ -119,8 +119,8 @@ crossPlatformText.svg = {
     .attr("y", function (d, i) {
       return (i - (textLineCount - 1)/2) * 1.1 + 'em';
     })
-    .attr("dominant-baseline", 'central') 
-    //.attr("alignment-baseline", data.verticalAlign) 
+    .attr("dominant-baseline", 'central')
+    //.attr("alignment-baseline", data.verticalAlign)
     .attr("text-anchor", textAnchor)
     .text(function (d) { return d; });
 
@@ -179,6 +179,8 @@ crossPlatformText.svg = {
     //result.attributes = attributes;
     if (!!callback) {
       callback(textAreaSelection[0][0]);
+    } else {
+      return textAreaSelection[0][0];
     }
   }
 };
