@@ -102,9 +102,9 @@ crossPlatformText.svg = {
     var transform = 'translate(' + xTranslation + ' ' + yTranslation + ')';
     var textAreaSelection;
     if (!!data.containerSelector) {
-      textAreaSelection = this.targetImageSelection.select(data.containerSelector).append('g')
+      textAreaSelection = this.targetImageSelection.select(data.containerSelector).append('g');
     } else {
-      textAreaSelection = this.targetImageSelection.append('g')
+      textAreaSelection = this.targetImageSelection.append('g');
     }
     textAreaSelection.attr('transform', transform);
 
