@@ -22,8 +22,7 @@ var packageJson = grunt.file.readJSON("package.json"),
 grunt.initConfig({
     pkg: packageJson,
     clean: {
-      build: [distDir],
-      demoLibs: ['./demos/lib/']
+      build: [distDir]
     },
     concat: {
         options: {
@@ -120,7 +119,7 @@ grunt.initConfig({
     },
     buildcontrol: {
       options: {
-        dir: 'demos',
+        dir: 'dist',
         commit: true,
         push: true,
         message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
@@ -137,18 +136,6 @@ grunt.initConfig({
           branch: 'build'
         }
       },
-    },
-    copy: {
-      index: {
-        src: './demos/index.html',
-        dest: './dist/index.html',
-      },
-      demos: {
-        expand: true,
-        cwd: './dist/lib/',
-        src: ['**'],
-        dest: './demos/lib/',
-      }
     }
   });
 
@@ -195,12 +182,12 @@ grunt.initConfig({
     grunt.config.set(name, val);
   });
 
-  // build 
-  grunt.registerTask('build', ['sync', 'clean:build', 'git-describe', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'clean:demoLibs', 'copy']);
+  // build
+  grunt.registerTask('build', ['sync', 'clean:build', 'git-describe', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify']);
   //grunt.registerTask('build', ['sync', 'clean:build', 'git-describe', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'copy']);
 
-  // quick-build 
-  grunt.registerTask('quick-build', ['sync', 'clean:build', 'git-describe', 'concat', 'uglify', 'clean:demoLibs', 'copy']);
+  // quick-build
+  grunt.registerTask('quick-build', ['sync', 'clean:build', 'git-describe', 'concat', 'uglify']);
 
   // test
   grunt.registerTask('test-min', 'Run local tests for development', function(val) {
