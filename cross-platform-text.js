@@ -1,6 +1,6 @@
 var crossPlatformText = {
   getInstance: function(args){
-    var crossPlatformTextInstance = _.cloneDeep(this);
+    var crossPlatformTextInstance = Object.create(this);
 
     var targetSelector = args.targetSelector;
     var target = document.querySelector(targetSelector);
