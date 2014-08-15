@@ -9,8 +9,8 @@ Usage
 1) Create Instance
   ```js
   var myInstance1 = crossPlatformText.getInstance({
-    targetSelector:'#my-svg1', // required. CSS selector.
-    format: 'svg' // optional. Either 'svg' or 'canvas'
+    targetSelector:'#my-svg1', // (CSS selector) required
+    format: 'svg' // ('svg' or 'canvas') required if 'targetSelector' does not reference an SVG or Canvas element
   });
   ```
 
@@ -24,7 +24,7 @@ Usage
 2) Render text
 
   ```js
-  myInstance1.render({
+  var myText1 = myInstance1.render({
       x:50, // (px) required
       y:200, // (px) required
       width:100, // (px) required

@@ -35,7 +35,7 @@
       targetSelector:'#my-svg1'
     });
 
-    crossPlatformTextInstance1.render({
+    var text1 = crossPlatformTextInstance1.render({
         id:'my-text1',
         x:50,
         y:200,
@@ -49,7 +49,7 @@
         fontSize:12
       });
 
-    crossPlatformTextInstance1.render({
+    var text2 = crossPlatformTextInstance1.render({
         id:'my-text2',
         x:160,
         y:200,
@@ -68,7 +68,7 @@
       targetSelector:'#diagram2-container',
       format: 'svg'
     });
-    crossPlatformTextInstance2.render({
+    var text3 = crossPlatformTextInstance2.render({
         id:'my-text3',
         x:50,
         y:200,
@@ -80,12 +80,9 @@
         verticalAlign:'middle',
         color:'blue',
         fontSize:12
-      },
-      function(textElements) {
-        // do something, if desired
       });
 
-    crossPlatformTextInstance1.render({
+    var text4 = crossPlatformTextInstance1.render({
         id:'my-text4',
         x:150,
         y:20,
@@ -97,12 +94,9 @@
         verticalAlign:'middle',
         color:'blue',
         fontSize:12
-      },
-      function(textElements) {
-        // do something, if desired
       });
 
-    crossPlatformTextInstance2.render({
+    var text5 = crossPlatformTextInstance2.render({
         id:'my-text5',
         x:160,
         y:200,
@@ -115,9 +109,6 @@
         color:'red',
         fontSize:12,
         rotation:20
-      },
-      function(textElements) {
-        // do something, if desired
       });
   };
  </script>
