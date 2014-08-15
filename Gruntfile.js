@@ -1,5 +1,3 @@
-var tmp = require('temporary');
-
 var jsSources = [
   'cross-platform-text.js',
   'svg.js',
@@ -7,8 +5,6 @@ var jsSources = [
 ];
 
 var specFileName;
-
-var tmpDir = new tmp.Dir().path;
 
 module.exports = function(grunt) {
 
@@ -36,7 +32,7 @@ grunt.initConfig({
         },
         crossPlatformText: {
             src:  [ '<banner>' ].concat(jsSources),
-            dest: tmpDir + 'cross-platform-text/js/cross-platform-text.js'
+            dest: distLibDir + 'cross-platform-text/js/cross-platform-text.js'
         }
     },
     uglify: {
@@ -44,15 +40,14 @@ grunt.initConfig({
         mangle: false
       },
       crossPlatformText: {
-        src: [ tmpDir + 'cross-platform-text/js/cross-platform-text.js' ],
+        src: [ distLibDir + 'cross-platform-text/js/cross-platform-text.js' ],
         dest: distLibDir + 'cross-platform-text/js/cross-platform-text.min.js'
       }
     },
     watch: {
       scripts: {
         files: [ "Gruntfile.js", "./src/**/*.js" ],
-        tasks: ['test-min', 'quick-build'],
-        //tasks: ['net', 'build'],
+        tasks: ['quick-build'],
         options: {
           interrupt: true,
         },

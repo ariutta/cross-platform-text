@@ -1,12 +1,9 @@
 var crossPlatformText = {
   getInstance: function(args){
-    var crossPlatformTextInstance = Object.create(this);
-
     var targetSelector = args.targetSelector;
     var target = document.querySelector(targetSelector);
     var targetTagName = target.tagName;
-    var targetSelection = d3.select(target);
-    var format, targetImageSelection;
+    var format, targetImage;
 
     var htmlContainerElements = [
       'div',
@@ -16,14 +13,24 @@ var crossPlatformText = {
 
     if (!!targetTagName && htmlContainerElements.indexOf(targetTagName.toLowerCase()) > -1) {
       format = args.format;
-      crossPlatformTextInstance.targetImageSelection = crossPlatformTextInstance[format].getTargetImageSelection(crossPlatformTextInstance, targetSelection[0][0]);
+      targetImage = this[format].createTargetImage(crossPlatformTextInstance, target);
     } else {
       format = targetTagName;
-      crossPlatformTextInstance.targetImageSelection = targetSelection;
+      targetImage = target;
     }
 
-    crossPlatformTextInstance[format].getOrCreateViewport(crossPlatformTextInstance, crossPlatformTextInstance.targetImageSelection[0][0]);
-    crossPlatformTextInstance.render = crossPlatformTextInstance[format].render;
+    var viewport = this[format].getOrCreateViewport(this, targetImage);
+    var crossPlatformTextInstance = Object.create(this);
+    crossPlatformTextInstance.targetImage = targetImage;
+    Object.keys(this[format]).forEach(function(key) {
+      if (!crossPlatformTextInstance[key]) {
+        if (typeof crossPlatformTextInstance[key] === 'object') {
+          crossPlatformTextInstance[key] = Object.create(crossPlatformTextInstance[format][key]);
+        } else {
+          crossPlatformTextInstance[key] = crossPlatformTextInstance[format][key];
+        }
+      }
+    });
     return crossPlatformTextInstance;
   },
   isNumber: function(n) {
