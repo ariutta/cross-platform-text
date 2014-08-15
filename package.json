@@ -1,8 +1,8 @@
 {
   "name": "cross-platform-text",
-  "version": "0.0.11",
-  "description": "Render text with Canvas, SVG and possibly other formats in the future.",
-  "main": "Gruntfile.js",
+  "version": "0.0.12",
+  "description": "Render single and multiline text with Canvas, SVG and possibly other formats in the future.",
+  "main": "./dist/lib/cross-platform-text/js/cross-platform-text.min.js",
   "directories": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,9 @@
   "keywords": [
     "text",
     "canvas",
-    "svg"
+    "svg",
+    "multiline",
+    "multi-line"
   ],
   "author": "Anders Riutta",
   "readmeFilename": "README.md",

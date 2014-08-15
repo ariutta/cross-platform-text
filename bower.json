@@ -1,7 +1,7 @@
 {
   "name": "cross-platform-text",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": [
-    "Gruntfile.js"
+    "./dist/lib/cross-platform-text/js/cross-platform-text.min.js"
   ]
 }
