@@ -1,4 +1,6 @@
-crossPlatformText.svg = {
+var utils = require('./utils');
+
+var svg = {
   xmlNS: 'http://www.w3.org/XML/1998/namespace',
   svgNS: 'http://www.w3.org/2000/svg',
   xmlnsNS: 'http://www.w3.org/2000/xmlns/',
@@ -73,15 +75,15 @@ crossPlatformText.svg = {
     var textContentSplitIntoLines = data.textContent.split(/\r\n|\r|\n|&#xA;/g);
     var textLineCount = textContentSplitIntoLines.length;
 
-    var padding = data.padding,
-      width = data.width,
-      height = data.height,
-      fontSize = data.fontSize;
-    var paddingInPx = crossPlatformText.convertToPx(padding, fontSize);
-    fontSize = crossPlatformText.convertToPx(fontSize, fontSize);
+    var padding = data.padding;
+    var width = data.width;
+    var height = data.height;
+    var fontSize = data.fontSize;
+    var paddingInPx = utils.convertToPx(padding, fontSize);
+    fontSize = utils.convertToPx(fontSize, fontSize);
 
     var textAnchor;
-    if (data.textAlign === 'left'){
+    if (data.textAlign === 'left') {
       textAnchor = 'start';
       textAlignXTranslation = paddingInPx;
     } else if (data.textAlign === 'right') {
@@ -95,12 +97,14 @@ crossPlatformText.svg = {
 
     var textAreaHeight = ((textLineCount - 1) * 1.1 * fontSize);
     var verticalAlignYTranslation;
-    if (data.verticalAlign === 'top'){
-      verticalAlignYTranslation = paddingInPx + textAreaHeight/2 + fontSize * (2/3);
+    if (data.verticalAlign === 'top') {
+      verticalAlignYTranslation = paddingInPx + textAreaHeight / 2 +
+          fontSize * (2 / 3);
     } else if (data.verticalAlign === 'bottom') {
-      verticalAlignYTranslation = height - paddingInPx - textAreaHeight/2 - fontSize * (2/3);
+      verticalAlignYTranslation = height - paddingInPx -
+          textAreaHeight / 2 - fontSize * (2 / 3);
     } else {
-      verticalAlignYTranslation = height/2;
+      verticalAlignYTranslation = height / 2;
     }
 
     var yTranslation = data.y + verticalAlignYTranslation;
@@ -110,7 +114,8 @@ crossPlatformText.svg = {
     textArea.setAttribute('transform', transform);
 
     if (!!data.containerSelector) {
-      this.targetImage.querySelector(data.containerSelector).appendChild(textArea);
+      this.targetImage.querySelector(data.containerSelector)
+      .appendChild(textArea);
     } else {
       this.targetImage.appendChild(textArea);
     }
@@ -120,17 +125,17 @@ crossPlatformText.svg = {
     .data(textContentSplitIntoLines)
     .enter()
     .append('text')
-    .attr("id", function (d, i) {
+    .attr('id', function(d, i) {
       return 'text-line' + i;
     })
-    .attr("x", 0)
-    .attr("y", function (d, i) {
-      return (i - (textLineCount - 1)/2) * 1.1 + 'em';
+    .attr('x', 0)
+    .attr('y', function(d, i) {
+      return (i - (textLineCount - 1) / 2) * 1.1 + 'em';
     })
-    .attr("dominant-baseline", 'central')
+    .attr('dominant-baseline', 'central')
     //.attr("alignment-baseline", data.verticalAlign)
-    .attr("text-anchor", textAnchor)
-    .text(function (d) { return d; });
+    .attr('text-anchor', textAnchor)
+    .text(function(d) { return d; });
 
     var attributes = [];
 
@@ -140,45 +145,50 @@ crossPlatformText.svg = {
     var color;
 
     var svgTextAttributeGenerator = {
-      color: function(colorValue){
+      color: function(colorValue) {
         textAreaSelection.attr('fill', colorValue);
       },
-      id: function(idValue){
+      id: function(idValue) {
         textAreaSelection.attr('id', 'text-for-' + idValue);
       },
-      fill: function(fillValue){
+      fill: function(fillValue) {
         textAreaSelection.attr('fill', fillValue);
       },
-      fillOpacity: function(fillOpacityValue){
+      fillOpacity: function(fillOpacityValue) {
         textAreaSelection.attr('fill-opacity', fillOpacityValue);
       },
-      fontFamily: function(fontFamilyValue){
+      fontFamily: function(fontFamilyValue) {
         textAreaSelection.attr('font-family', fontFamilyValue);
       },
-      fontSize: function(fontSizeValue){
+      fontSize: function(fontSizeValue) {
         textAreaSelection.attr('font-size', fontSizeValue);
       },
-      fontStyle: function(fontStyleValue){
+      fontStyle: function(fontStyleValue) {
         textAreaSelection.attr('font-style', fontStyleValue);
       },
-      fontWeight: function(fontWeightValue){
+      fontWeight: function(fontWeightValue) {
         textAreaSelection.attr('font-weight', fontWeightValue);
       },
       rotation: function(rotationValue) {
-        transform += ' rotate(' + rotationValue + ',' + (width/2 - textAlignXTranslation) + ',' + (height/2 - verticalAlignYTranslation) + ')';
+        transform += ' rotate(' + rotationValue + ',' +
+            (width / 2 - textAlignXTranslation) +
+            ',' + (height / 2 - verticalAlignYTranslation) + ')';
         textAreaSelection.attr('transform', transform);
       }
     };
 
-    var attributeListItemName, attributeListItemValue;
+    var attributeListItemName;
+    var attributeListItemValue;
     var attributeList = d3.map(data).entries().sort(function(a, b) {
-      return attributeDependencyOrder.indexOf(a.key) - attributeDependencyOrder.indexOf(b.key);
+      return attributeDependencyOrder.indexOf(a.key) -
+          attributeDependencyOrder.indexOf(b.key);
     });
-    attributeList.forEach(function(attributeListItem){
+    attributeList.forEach(function(attributeListItem) {
       attributeListItemName = attributeListItem.key;
       attributeListItemValue = attributeListItem.value;
       if (svgTextAttributeGenerator.hasOwnProperty(attributeListItemName)) {
-        svgTextAttributeGenerator[attributeListItemName](attributeListItemValue);
+        svgTextAttributeGenerator[attributeListItemName](
+          attributeListItemValue);
       }
     });
 
@@ -190,3 +200,4 @@ crossPlatformText.svg = {
   }
 };
 
+module.exports = svg;

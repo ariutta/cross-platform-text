@@ -1,8 +1,8 @@
 {
   "name": "cross-platform-text",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Render single and multiline text with Canvas, SVG and possibly other formats in the future.",
-  "main": "./dist/lib/cross-platform-text/js/cross-platform-text.min.js",
+  "main": "./cross-platform-text.js",
   "directories": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

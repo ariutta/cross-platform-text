@@ -1,1 +1,3 @@
-crossPlatformText.canvas = {};
+canvas = {};
+
+module.exporst = canvas;
