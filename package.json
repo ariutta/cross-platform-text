@@ -1,6 +1,6 @@
 {
   "name": "cross-platform-text",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Render single and multiline text with Canvas, SVG and possibly other formats in the future.",
   "main": "./index.js",
   "directories": {},
