@@ -1,6 +1,6 @@
 {
   "name": "cross-platform-text",
-  "version": "0.0.14",
+  "version": "0.0.13",
   "description": "Render single and multiline text with Canvas, SVG and possibly other formats in the future.",
   "main": "./index.js",
   "directories": {},
@@ -84,7 +84,9 @@
     "phash": "0.0.5",
     "gulp-mocha": "~2.0.1",
     "node-notifier": "~4.2.1",
-    "lodash": "~3.7.0"
+    "lodash": "~3.7.0",
+    "brfs": "~1.4.0",
+    "deglobalify": "~0.2.0"
   },
   "dependencies": {}
 }
