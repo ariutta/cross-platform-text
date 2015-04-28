@@ -83,7 +83,8 @@
     "imagemagick-native": "~1.7.0",
     "phash": "0.0.5",
     "gulp-mocha": "~2.0.1",
-    "node-notifier": "~4.2.1"
+    "node-notifier": "~4.2.1",
+    "lodash": "~3.7.0"
   },
   "dependencies": {}
 }
