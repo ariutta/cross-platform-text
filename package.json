@@ -11,6 +11,7 @@
     "type": "git",
     "url": "https://github.com/ariutta/cross-platform-text.git"
   },
+  "license": "Apache-2.0",
   "keywords": [
     "text",
     "canvas",
